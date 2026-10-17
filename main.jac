@@ -8,12 +8,14 @@ import from .components.SchoolMessages { SchoolMessages }
 import from .components.SchoolProfiles { SchoolProfiles }
 import from .components.LearningMaterials { LearningMaterials }
 import from .components.EventMedia { EventMedia }
+import from components.StudentRoster { StudentRoster }
 import from "@jac/runtime" { Router, Routes, Route }
 import ".styles.global.css";
 
 def:pub app() -> JsxElement {
     return <Router><Routes>
         <Route path="/" element={<SchoolDashboard />} />
+        <Route path="/students" element={<StudentRoster />} />
         <Route path="/progress" element={<LearningProgress />} />
         <Route path="/homework" element={<Homework />} />
         <Route path="/calendar" element={<SchoolCalendar />} />
