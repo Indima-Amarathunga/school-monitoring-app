@@ -1,6 +1,7 @@
 sv import from ..services.schoolService { SchoolEvent, get_school_dashboard, add_school_event }
 import from .ui.card { Card, CardHeader, CardTitle, CardDescription, CardContent }
 import from .ui.button { Button }
+import from "@jac/runtime" { Link }
 import from "@hugeicons/react" { HugeiconsIcon }
 import from "@hugeicons/core-free-icons" { Home01Icon, Calendar01Icon, BookOpen01Icon, Message01Icon, UserGroupIcon, CheckmarkCircle02Icon, Notification01Icon, Add01Icon, Clock01Icon, ChartHistogramIcon }
 
@@ -59,15 +60,15 @@ def:pub SchoolDashboard() -> JsxElement {
                 </div>
                 <p className="mb-2 px-3 text-xs font-medium uppercase tracking-wider text-muted-foreground">Workspace</p>
                 <nav className="flex flex-col gap-1">
-                    <a href="#overview" className={active_item}><HugeiconsIcon icon={ChartHistogramIcon} strokeWidth={2} className="size-4" />Overview</a>
-                    <a href="#progress" className={menu_item}><HugeiconsIcon icon={BookOpen01Icon} strokeWidth={2} className="size-4" />Learning progress</a>
-                    <a href="#homework" className={menu_item}><HugeiconsIcon icon={CheckmarkCircle02Icon} strokeWidth={2} className="size-4" />Homework</a>
-                    <a href="#calendar" className={menu_item}><HugeiconsIcon icon={Calendar01Icon} strokeWidth={2} className="size-4" />Calendar</a>
-                    <a href="#notices" className={menu_item}><HugeiconsIcon icon={Notification01Icon} strokeWidth={2} className="size-4" />Notices</a>
-                    <a href="#community" className={menu_item}><HugeiconsIcon icon={Message01Icon} strokeWidth={2} className="size-4" />Messages</a>
-                    <a href="#profiles" className={menu_item}><HugeiconsIcon icon={UserGroupIcon} strokeWidth={2} className="size-4" />Profiles</a>
-                    <a href="#materials" className={menu_item}><HugeiconsIcon icon={BookOpen01Icon} strokeWidth={2} className="size-4" />Learning materials</a>
-                    <a href="#event-media" className={menu_item}><HugeiconsIcon icon={Calendar01Icon} strokeWidth={2} className="size-4" />Event media</a>
+                    <Link to="/" className={active_item}><HugeiconsIcon icon={ChartHistogramIcon} strokeWidth={2} className="size-4" />Overview</Link>
+                    <Link to="/progress" className={menu_item}><HugeiconsIcon icon={BookOpen01Icon} strokeWidth={2} className="size-4" />Learning progress</Link>
+                    <Link to="/homework" className={menu_item}><HugeiconsIcon icon={CheckmarkCircle02Icon} strokeWidth={2} className="size-4" />Homework</Link>
+                    <Link to="/calendar" className={menu_item}><HugeiconsIcon icon={Calendar01Icon} strokeWidth={2} className="size-4" />Calendar</Link>
+                    <Link to="/notices" className={menu_item}><HugeiconsIcon icon={Notification01Icon} strokeWidth={2} className="size-4" />Notices</Link>
+                    <Link to="/messages" className={menu_item}><HugeiconsIcon icon={Message01Icon} strokeWidth={2} className="size-4" />Messages</Link>
+                    <Link to="/profiles" className={menu_item}><HugeiconsIcon icon={UserGroupIcon} strokeWidth={2} className="size-4" />Profiles</Link>
+                    <Link to="/materials" className={menu_item}><HugeiconsIcon icon={BookOpen01Icon} strokeWidth={2} className="size-4" />Learning materials</Link>
+                    <Link to="/event-media" className={menu_item}><HugeiconsIcon icon={Calendar01Icon} strokeWidth={2} className="size-4" />Event media</Link>
                 </nav>
                 <div className="mt-auto rounded-xl bg-muted/70 p-4">
                     <p className="text-sm font-medium">Need a hand?</p>
