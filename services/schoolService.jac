@@ -91,6 +91,22 @@ def:pub get_school_dashboard() -> dict {
 }
 
 
+def:pub get_calendar_events() -> list[SchoolEvent] {
+    return [root -->][?:SchoolEvent];
+}
+
+
+def:pub create_calendar_event(title: str, event_date: str, details: str, actor_teacher_id: str) -> SchoolEvent | None {
+    if not title.strip() or not event_date.strip() { return None; }
+    teacher_found = False;
+    for teacher in [root -->][?:TeacherProfile] {
+        if jid(teacher) == actor_teacher_id { teacher_found = True; }
+    }
+    if not teacher_found { return None; }
+    return root ++> SchoolEvent(title=title.strip(), event_date=event_date, details=details, created_by=actor_teacher_id);
+}
+
+
 def:pub add_school_event(title: str, event_date: str, details: str, actor_teacher_id: str) -> SchoolEvent | None {
     if not title.strip() or not event_date.strip() { return None; }
     teacher_found = False;
