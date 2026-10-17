@@ -1,7 +1,7 @@
 sv import from ..services.schoolService { SchoolEvent, get_school_dashboard, add_school_event }
 import from .ui.card { Card, CardHeader, CardTitle, CardDescription, CardContent }
 import from .ui.button { Button }
-import from "@jac/runtime" { Link }
+import from "@jac/runtime" { Link, useNavigate }
 import from "@hugeicons/react" { HugeiconsIcon }
 import from "@hugeicons/core-free-icons" { Home01Icon, Calendar01Icon, BookOpen01Icon, Message01Icon, UserGroupIcon, CheckmarkCircle02Icon, Notification01Icon, Add01Icon, Clock01Icon, ChartHistogramIcon }
 
@@ -16,8 +16,11 @@ def:pub SchoolDashboard() -> JsxElement {
     has event_details: str = "";
     has event_message: str = "";
     has adding_event: bool = False;
+    nav = useNavigate();
 
     async can with entry {
+        saved_role = sessionStorage.getItem("schoolhouse_demo_role");
+        if saved_role { role = saved_role; }
         try {
             dashboard = await get_school_dashboard();
             events = dashboard["events"] as list[SchoolEvent];
@@ -61,7 +64,7 @@ def:pub SchoolDashboard() -> JsxElement {
                 <p className="mb-2 px-3 text-xs font-medium uppercase tracking-wider text-muted-foreground">Workspace</p>
                 <nav className="flex flex-col gap-1">
                     <Link to="/" className={active_item}><HugeiconsIcon icon={ChartHistogramIcon} strokeWidth={2} className="size-4" />Overview</Link>
-                    <Link to="/students" className={menu_item}><HugeiconsIcon icon={UserGroupIcon} strokeWidth={2} className="size-4" />Students</Link>
+                    {role == "Teacher" and <Link to="/students" className={menu_item}><HugeiconsIcon icon={UserGroupIcon} strokeWidth={2} className="size-4" />Students</Link>}
                     <Link to="/progress" className={menu_item}><HugeiconsIcon icon={BookOpen01Icon} strokeWidth={2} className="size-4" />Learning progress</Link>
                     <Link to="/homework" className={menu_item}><HugeiconsIcon icon={CheckmarkCircle02Icon} strokeWidth={2} className="size-4" />Homework</Link>
                     <Link to="/calendar" className={menu_item}><HugeiconsIcon icon={Calendar01Icon} strokeWidth={2} className="size-4" />Calendar</Link>
@@ -83,7 +86,7 @@ def:pub SchoolDashboard() -> JsxElement {
                     <div className="hidden md:block"><p className="text-sm text-muted-foreground">Monday, 17 October</p><p className="font-medium">Oakwood Primary · Academic year 2024–25</p></div>
                     <div className="ml-auto flex items-center gap-3">
                         <label className="sr-only" htmlFor="role">Viewing as</label>
-                        <select id="role" value={role} onChange={lambda (e: ChangeEvent) { role = e.target.value; }} className="h-9 rounded-lg border border-border bg-card px-3 text-sm"><option>Parent</option><option>Teacher</option></select>
+                        <div className="flex flex-col gap-0.5"><label className="text-[10px] text-muted-foreground" htmlFor="role">Preview role (demo only)</label><select id="role" value={role} onChange={lambda (e: ChangeEvent) { role = e.target.value; sessionStorage.setItem("schoolhouse_demo_role", e.target.value); nav("/"); }} className="h-9 rounded-lg border border-border bg-card px-3 text-sm"><option value="Parent">Parent</option><option value="Teacher">Teacher</option></select></div>
                         <button className="relative flex size-9 items-center justify-center rounded-full border bg-card text-muted-foreground" aria-label="Notifications"><HugeiconsIcon icon={Notification01Icon} strokeWidth={2} className="size-4" /><span className="absolute right-2 top-2 size-1.5 rounded-full bg-primary" /></button>
                         <div className="flex size-9 items-center justify-center rounded-full bg-amber-100 text-xs font-semibold text-amber-900">AM</div>
                     </div>

@@ -1,8 +1,15 @@
-import from "@jac/runtime" { Link }
+import from "@jac/runtime" { Link, Navigate }
 import from .ui.card { Card, CardHeader, CardTitle, CardDescription, CardContent }
 
 def:pub StudentRoster() -> JsxElement {
     has selected: str = "Maya Patel";
+    has role: str = "";
+    async can with entry {
+        saved_role = sessionStorage.getItem("schoolhouse_demo_role");
+        role = saved_role or "Parent";
+    }
+    if role == "" { return <main className="min-h-screen bg-muted/40 p-8"><p className="text-sm text-muted-foreground">Loading role…</p></main>; }
+    if role != "Teacher" { return <Navigate to="/" replace={True} />; }
     selected_id = "03121" if selected == "Maya Patel" else "03122" if selected == "Noah Williams" else "03123" if selected == "Ava Johnson" else "03124" if selected == "Ethan Chen" else "03125";
     homework_count = "8 of 10" if selected == "Maya Patel" else "9 of 10" if selected == "Noah Williams" else "7 of 10" if selected == "Ava Johnson" else "10 of 10" if selected == "Ethan Chen" else "6 of 10";
     attendance = "5 of 5 days" if selected == "Maya Patel" or selected == "Ethan Chen" else "4 of 5 days" if selected == "Noah Williams" else "5 of 5 days" if selected == "Ava Johnson" else "3 of 5 days";
