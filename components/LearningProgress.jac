@@ -8,8 +8,9 @@ def:pub LearningProgress() -> JsxElement {
     has selected_student: str = "Maya Patel";
     async can with entry {
         saved_role = sessionStorage.getItem("schoolhouse_demo_role");
-        if saved_role { role = saved_role; }
-        if role == "Teacher" {
+        current_role = saved_role or "Parent";
+        role = current_role;
+        if current_role == "Teacher" {
             saved_student = sessionStorage.getItem("schoolhouse_selected_student");
             if saved_student { selected_student = saved_student; }
         }
